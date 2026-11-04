@@ -6,7 +6,7 @@ externalUrl: "https://cparelay.com"
 order: 1
 ---
 
-My wife runs a CPA firm. Every practice management tool on the market got in her way during tax season, so she walked me through the pain points and I built CPA Relay to her specs.
+My wife runs a [CPA firm](https://ashleycruiser.com). Every practice management tool on the market got in her way during tax season, so she walked me through the pain points and I built CPA Relay to her specs.
 
 It handles the work around the return: chasing clients for documents, getting engagement letters and 8879s signed, tracking who owes what, and billing for it. It doesn't calculate taxes, e-file, or replace the general ledger. Firms keep Drake, QuickBooks, or whatever they already trust for that.
 

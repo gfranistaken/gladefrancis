@@ -19,7 +19,7 @@ So SaaS didn't die. It moved down a level.
 
 When one experienced developer paired with AI can build and maintain what used to take a fifteen-person engineering team, two things become viable that never made financial sense before:
 
-1. **Hyper-niche software.** You don't need ten thousand customers to justify building a product anymore. My wife runs a CPA firm. Every practice management suite on the market was getting in her way during tax season, so she walked me through the exact pain points and I built [CPA Relay](https://cparelay.com) to her specs. A small, focused product built around how one trade actually works beats a generic platform every time.
+1. **Hyper-niche software.** You don't need ten thousand customers to justify building a product anymore. My wife runs a [CPA firm](https://ashleycruiser.com). Every practice management suite on the market was getting in her way during tax season, so she walked me through the exact pain points and I built [CPA Relay](https://cparelay.com) to her specs. A small, focused product built around how one trade actually works beats a generic platform every time.
 2. **Customizable software as a service.** Because modifying and extending a clean codebase is now so fast, the boundary between "off-the-shelf product" and "custom software" is disappearing. Instead of forcing a business to bend its operations around a rigid SaaS tool, you can take a solid base product and tailor it directly to how that specific company runs—for a fraction of what agencies used to charge for a discovery phase.
 
 Small businesses don't need another bloated platform with a chatbot bolted onto the corner. They need smaller, sharper software that fits the way they actually work.
