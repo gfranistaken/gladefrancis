@@ -1,6 +1,6 @@
 ---
 title: "PayPolka"
-description: "Multi-tenant estimating, time tracking, and invoicing built with Rails 8, SQLite, and 1,500 automated tests."
+description: "Multi-tenant estimating, time tracking, and invoicing built with Rails 8, SQLite, and a lot of pain and experience using various invoicing apps for a decade."
 category: "web-app"
 date: 2026-05-06
 externalUrl: "https://paypolka.com"

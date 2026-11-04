@@ -1,7 +1,7 @@
 ---
 title: "SaaS isn't dead. It just moved down a level."
 description: "Why one-size-fits-all enterprise software is losing ground to niche products and customizable software for small businesses."
-pubDate: 2026-11-04
+pubDate: 2026-10-29
 tags: ["Software", "AI", "Business"]
 ---
 

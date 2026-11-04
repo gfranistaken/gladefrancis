@@ -10,6 +10,7 @@
 
 ## Writing
 
+- [Anyone can build a website now. Here's what still matters.](/blog/anyone-can-build-a-website-now)
 - [SaaS isn't dead. It just moved down a level.](/blog/saas-isnt-dead)
 - [Connecting Claude and ChatGPT directly to PayPolka](/blog/connecting-claude-and-chatgpt-to-paypolka)
 - [You can't buy a mention: how businesses end up in ChatGPT's answers](/blog/you-cant-buy-a-mention)
