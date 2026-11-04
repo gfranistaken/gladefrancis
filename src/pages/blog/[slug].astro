@@ -1,0 +1,42 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, render, type CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }: CollectionEntry<"blog">) => !data.draft);
+  return posts.map((post: CollectionEntry<"blog">) => ({
+    params: { slug: post.id.replace(/\.md$/, "") },
+    props: { post },
+  }));
+}
+
+type Props = { post: CollectionEntry<"blog"> };
+const { post } = Astro.props as Props;
+const { Content } = await render(post);
+---
+
+<BaseLayout title={`${post.data.title} - Glade Francis`} description={post.data.description}>
+  <article class="px-4 md:px-6 lg:px-6 pt-20 pb-24 lg:pt-36 max-w-2xl">
+    <header class="mb-10">
+      <time
+        datetime={post.data.pubDate.toISOString()}
+        class="block text-xs text-[var(--color-text-muted)]"
+      >
+        {post.data.pubDate.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}
+      </time>
+      <h1 class="mt-2">{post.data.title}</h1>
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+    <div class="mt-16 pt-8 border-t border-[var(--color-border)]">
+      <a href="/blog" class="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
+        &larr; Blog
+      </a>
+    </div>
+  </article>
+</BaseLayout>

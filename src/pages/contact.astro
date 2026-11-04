@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Contact - Glade Francis"
+  description="Send a note to Glade Francis."
+>
+  <section class="px-4 md:px-6 lg:px-6 pt-20 pb-24 lg:pt-36 max-w-2xl">
+    <h1>Contact</h1>
+    <p class="text-[var(--color-text-muted)] mt-4 text-base leading-relaxed">
+      Drop a note below. It goes straight to my inbox.
+    </p>
+
+    <form
+      action="https://normforms.com/f/JB7s2JQtnm3I"
+      method="POST"
+      class="mt-8 max-w-lg flex flex-col gap-5"
+    >
+      <div class="flex flex-col gap-1.5">
+        <label for="name" class="text-sm font-medium">Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          class="px-3.5 py-2.5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] transition-colors"
+        />
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label for="email" class="text-sm font-medium">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          class="px-3.5 py-2.5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] transition-colors"
+        />
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label for="message" class="text-sm font-medium">Message</label>
+        <textarea
+          id="message"
+          name="message"
+          required
+          rows="5"
+          class="px-3.5 py-2.5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] transition-colors resize-y"
+        ></textarea>
+      </div>
+
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+      <button
+        type="submit"
+        class="self-start mt-1 px-5 py-2.5 bg-[var(--color-accent)] text-[var(--color-bg)] text-sm font-medium rounded hover:bg-[var(--color-accent-hover)] transition-colors cursor-pointer"
+      >
+        Send
+      </button>
+    </form>
+  </section>
+</BaseLayout>

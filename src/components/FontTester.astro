@@ -1,0 +1,152 @@
+---
+// Dev-only typeface switcher. BaseLayout renders it only under `npm run dev`.
+// Set heading and body faces separately: pick from the list or type any Google
+// Fonts family name and press Enter. Choices override --font-heading and
+// --font-sans, stick across page loads, and can be shared with
+// ?heading=Name&body=Name.
+---
+
+<div id="font-tester">
+  <div class="row" data-target="heading">
+    <label>Headings</label>
+    <select></select>
+    <input type="text" placeholder="Any Google font, Enter" />
+  </div>
+  <div class="row" data-target="body">
+    <label>Body</label>
+    <select></select>
+    <input type="text" placeholder="Any Google font, Enter" />
+  </div>
+</div>
+
+<style>
+  #font-tester {
+    position: fixed;
+    right: 12px;
+    bottom: 12px;
+    z-index: 9999;
+    display: grid;
+    gap: 6px;
+    padding: 8px 10px;
+    background: #1a1a1a;
+    color: #f7f7f7;
+    border-radius: 8px;
+    font: 12px/1.2 system-ui, sans-serif;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.2);
+  }
+  #font-tester .row {
+    display: grid;
+    grid-template-columns: 64px auto 150px;
+    gap: 6px;
+    align-items: center;
+  }
+  #font-tester select,
+  #font-tester input {
+    font: inherit;
+    padding: 4px 6px;
+    border-radius: 4px;
+    border: 0;
+    color: #1a1a1a;
+    background: #fff;
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    // Match the production faces in global.css.
+    const DEFAULT = { heading: "Lora", body: "Plus Jakarta Sans" };
+    // source: "local" is already loaded, "google" and "fontshare" load on demand.
+    const FONTS = [
+      ["Satoshi", "local"],
+      ["Plus Jakarta Sans", "local"],
+      ["General Sans", "fontshare"],
+      ["Switzer", "fontshare"],
+      ["Inter", "google"],
+      ["Geist", "google"],
+      ["DM Sans", "google"],
+      ["Manrope", "google"],
+      ["Instrument Sans", "google"],
+      ["IBM Plex Sans", "google"],
+      ["Public Sans", "google"],
+      ["Work Sans", "google"],
+      ["Source Serif 4", "google"],
+      ["Newsreader", "google"],
+      ["Literata", "google"],
+      ["Fraunces", "google"],
+      ["Lora", "local"],
+      ["Spectral", "google"],
+      ["EB Garamond", "google"],
+      ["IBM Plex Serif", "google"],
+    ];
+    // Extra faces offered in only one row.
+    const EXTRA = {
+      heading: [
+        ["Sentient", "fontshare"],
+        ["Clash Display", "fontshare"],
+        ["Gambetta", "fontshare"],
+      ],
+      body: [
+        ["Outfit", "google"],
+      ],
+    };
+    const ALL = [...FONTS, ...EXTRA.heading, ...EXTRA.body];
+    const FALLBACK = "system-ui, -apple-system, sans-serif";
+    const VARS = { heading: "--font-heading", body: "--font-sans" };
+    const loaded = new Set();
+
+    function load(name, source) {
+      if (loaded.has(name) || source === "local") return;
+      loaded.add(name);
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      if (source === "fontshare") {
+        const slug = name.toLowerCase().replace(/ /g, "-");
+        link.href = `https://api.fontshare.com/v2/css?f[]=${slug}@300,400,500,700&display=swap`;
+      } else {
+        const family = name.replace(/ /g, "+");
+        link.href = `https://fonts.googleapis.com/css2?family=${family}:wght@400;500;700&display=swap`;
+        // Some families lack one of those weights; retry with the default weight.
+        link.onerror = () => {
+          link.onerror = null;
+          link.href = `https://fonts.googleapis.com/css2?family=${family}&display=swap`;
+        };
+      }
+      document.head.appendChild(link);
+    }
+
+    function apply(target, name) {
+      const known = ALL.find(([n]) => n.toLowerCase() === name.toLowerCase());
+      const family = known ? known[0] : name;
+      load(family, known ? known[1] : "google");
+      document.documentElement.style.setProperty(VARS[target], `"${family}", ${FALLBACK}`);
+      try { localStorage.setItem(`font-tester-${target}`, family); } catch {}
+      return family;
+    }
+
+    const params = new URLSearchParams(location.search);
+
+    for (const row of document.querySelectorAll("#font-tester .row")) {
+      const target = row.dataset.target;
+      const select = row.querySelector("select");
+      const custom = row.querySelector("input");
+      for (const [name] of [...FONTS, ...EXTRA[target]]) select.add(new Option(name, name));
+
+      const choose = (name) => {
+        const family = apply(target, name);
+        if (![...select.options].some((o) => o.value === family)) select.add(new Option(family, family));
+        select.value = family;
+      };
+
+      let initial = DEFAULT[target];
+      try { initial = localStorage.getItem(`font-tester-${target}`) || DEFAULT[target]; } catch {}
+      choose(params.get(target) || initial);
+
+      select.addEventListener("change", () => choose(select.value));
+      custom.addEventListener("keydown", (e) => {
+        if (e.key !== "Enter" || !custom.value.trim()) return;
+        choose(custom.value.trim());
+        custom.value = "";
+      });
+    }
+  })();
+</script>

@@ -1,0 +1,16 @@
+# Glade Francis
+
+> Software developer in Salt Lake City and founder of Struxr. I build and run CPA Relay (practice management for small CPA firms), PayPolka (estimating, time tracking, and invoicing for service businesses), and Krux CRM (a simple CRM for small teams), and take on custom software builds for small businesses.
+
+## Software
+
+- [CPA Relay](https://cparelay.com): practice management for 1 to 15 person CPA firms
+- [PayPolka](https://paypolka.com): estimating, time tracking, and invoicing for service businesses
+- [Krux CRM](https://kruxcrm.com): a simple CRM for small teams
+
+## Writing
+
+- [SaaS isn't dead. It just moved down a level.](/blog/saas-isnt-dead)
+- [Connecting Claude and ChatGPT directly to PayPolka](/blog/connecting-claude-and-chatgpt-to-paypolka)
+- [You can't buy a mention: how businesses end up in ChatGPT's answers](/blog/you-cant-buy-a-mention)
+- [Why I replaced WordPress with Astro and AI](/blog/why-i-replaced-wordpress-with-astro-and-ai)

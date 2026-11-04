@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+
+const projects = (await getCollection("portfolio", ({ data }: CollectionEntry<"portfolio">) => !data.draft))
+  .sort((a: CollectionEntry<"portfolio">, b: CollectionEntry<"portfolio">) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Projects - Glade Francis"
+  description="Software built and run by Glade Francis, including CPA Relay, PayPolka, and Krux CRM."
+>
+  <section class="px-4 md:px-6 lg:px-6 pt-20 pb-20 lg:pt-36 max-w-2xl">
+    <h1>Projects</h1>
+    <div class="mt-8 flex flex-col">
+      {projects.map((project: CollectionEntry<"portfolio">) => (
+        <a
+          href={`/projects/${project.id.replace(/\.md$/, "")}`}
+          class="group block no-underline py-5 border-t border-[var(--color-border)]"
+        >
+          <article>
+            <h2 class="text-lg group-hover:text-[var(--color-text-muted)] transition-colors">
+              {project.data.title}
+            </h2>
+            <p class="mt-1.5 text-sm text-[var(--color-text-muted)] leading-relaxed">
+              {project.data.description}
+            </p>
+          </article>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

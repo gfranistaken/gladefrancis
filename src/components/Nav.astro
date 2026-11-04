@@ -1,0 +1,103 @@
+---
+const currentPath = Astro.url.pathname;
+
+const mainLinks = [
+  { href: "/", label: "Home" },
+  { href: "/projects", label: "Projects" },
+  { href: "/blog", label: "Blog" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
+---
+
+<!-- Mobile top bar -->
+<div class="lg:hidden flex items-center justify-between px-6 py-5 border-b border-[var(--color-border)]">
+  <a
+    href="/"
+    aria-label="Home"
+    class="inline-flex h-8 w-8 items-center justify-center rounded-full border-[1.5px] border-[var(--color-text)] text-sm font-semibold text-[var(--color-text)] no-underline"
+  >
+    G
+  </a>
+  <button
+    id="mobile-menu-btn"
+    class="p-2 -mr-2"
+    aria-label="Toggle menu"
+    aria-expanded="false"
+  >
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <line x1="4" y1="7" x2="20" y2="7" />
+      <line x1="4" y1="12" x2="20" y2="12" />
+      <line x1="4" y1="17" x2="20" y2="17" />
+    </svg>
+  </button>
+</div>
+
+<!-- Mobile dropdown menu -->
+<div id="mobile-menu" class="hidden lg:hidden px-6 py-4 border-b border-[var(--color-border)]">
+  <nav aria-label="Main navigation">
+    <ul class="flex flex-col gap-3 list-none">
+      {mainLinks.map(({ href, label }) => (
+        <li>
+          <a
+            href={href}
+            class:list={[
+              "text-sm no-underline",
+              currentPath === href || (href !== "/" && currentPath.startsWith(href))
+                ? "text-[var(--color-text)] font-bold"
+                : "text-[var(--color-text-muted)]",
+            ]}
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</div>
+
+<!-- Desktop sidebar -->
+<aside class="hidden lg:block w-56 shrink-0 relative">
+  <div class="sticky top-36 px-10 pb-10">
+    <a
+      href="/"
+      aria-label="Home"
+      class=" mb-8 inline-flex h-8 w-8 items-center justify-center rounded-full border-[1.5px] border-[var(--color-text)] text-sm font-semibold text-[var(--color-text)] no-underline"
+    >
+      G
+    </a>
+
+    <!-- Main nav -->
+    <nav aria-label="Main navigation">
+      <ul class="flex flex-col gap-2.5 list-none">
+        {mainLinks.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              class:list={[
+                "text-sm no-underline transition-colors",
+                currentPath === href || (href !== "/" && currentPath.startsWith(href))
+                  ? "text-[var(--color-text)] font-medium"
+                  : "text-[var(--color-text-muted)] hover:text-[var(--color-text)]",
+              ]}
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</aside>
+
+<script>
+  const btn = document.getElementById("mobile-menu-btn");
+  const menu = document.getElementById("mobile-menu");
+  if (btn && menu) {
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!expanded));
+      menu.classList.toggle("hidden");
+    });
+  }
+</script>

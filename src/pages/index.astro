@@ -1,0 +1,88 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+
+const posts = (await getCollection("blog", ({ data }: CollectionEntry<"blog">) => !data.draft))
+  .sort((a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout
+  title="Glade Francis"
+  description="Software developer in Salt Lake City. Founder of Struxr, CPA Relay, PayPolka, and Krux CRM."
+>
+  <section class="px-4 md:px-6 lg:px-6 pt-20 pb-10 lg:pt-36 max-w-2xl">
+    <h1 id="greeting">Greetings from the Wasatch Front.</h1>
+    <p class="mt-5 text-[var(--color-text-muted)] text-lg leading-relaxed">
+      I'm Glade. I run a software development shop called Struxr. For nearly twenty years I've built web applications and tools for small businesses. Today I spend most of my time building and running my own software products, and taking on a few custom builds for companies tired of bloated SaaS.
+    </p>
+  </section>
+
+  <script is:inline>
+    (() => {
+      const places = [
+        "the Wasatch Front",
+        "4,500 feet",
+        "the high desert",
+        "the base of the Rockies",
+        "somewhere in Little Cottonwood Canyon",
+        "somewhere up Millcreek Canyon",
+        "the Wasatch backcountry",
+        "red rock country",
+      ];
+      const el = document.getElementById("greeting");
+      if (el) {
+        const pick = places[Math.floor(Math.random() * places.length)];
+        el.textContent = `Greetings from ${pick}.`;
+      }
+    })();
+  </script>
+
+  <section class="px-4 md:px-6 lg:px-6 py-8 max-w-2xl">
+    <div class="border-t border-[var(--color-border)] pt-8"></div>
+    <h2>What I'm building</h2>
+    <div class="mt-6 space-y-6">
+      <div>
+        <a href="/projects/cpa-relay" class="font-medium text-base text-[var(--color-text)]">CPA Relay</a>
+        <p class="mt-1 text-sm text-[var(--color-text-muted)] leading-relaxed">
+          Practice management for small CPA firms. My wife runs a firm and hated every option on the market, so I built this to her specs. Engagement letters, document collection, 8879 e-signatures, and billing.
+        </p>
+      </div>
+      <div>
+        <a href="/projects/paypolka" class="font-medium text-base text-[var(--color-text)]">PayPolka</a>
+        <p class="mt-1 text-sm text-[var(--color-text-muted)] leading-relaxed">
+          Estimating, time tracking, and invoicing for service businesses. Direct Stripe payments, an MCP connection to Claude and ChatGPT, and 1,500 automated tests.
+        </p>
+      </div>
+      <div>
+        <a href="/projects/krux-crm" class="font-medium text-base text-[var(--color-text)]">Krux CRM</a>
+        <p class="mt-1 text-sm text-[var(--color-text-muted)] leading-relaxed">
+          A simple CRM for small teams who answer their own email and don't want to manage an enterprise sales pipeline. Invite-only.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="px-4 md:px-6 lg:px-6 py-8 max-w-2xl">
+    <div class="border-t border-[var(--color-border)] pt-8"></div>
+    <h2>Writing</h2>
+    <div class="mt-6 space-y-4">
+      {posts.map((post: CollectionEntry<"blog">) => (
+        <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-6">
+          <a href={`/blog/${post.id.replace(/\.md$/, "")}`} class="text-base text-[var(--color-text)]">
+            {post.data.title}
+          </a>
+          <time
+            datetime={post.data.pubDate.toISOString()}
+            class="text-xs text-[var(--color-text-muted)] shrink-0"
+          >
+            {post.data.pubDate.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </time>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
