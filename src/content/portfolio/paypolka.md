@@ -9,17 +9,24 @@ order: 2
 
 Most estimating and invoicing tools are either bloated systems with dozens of menus you never use, or platforms that sit between a business and its money, taking extra transaction cuts.
 
-I built PayPolka to prove that a modern, multi-tenant web application can be designed, tested, and deployed to production in three weeks using modern AI tooling and senior engineering discipline.
+## What drives people crazy about invoicing software
 
-## What PayPolka does
+Spend ten minutes reading small business forums and the same complaints about billing software come up over and over:
 
-PayPolka handles the complete billing loop for small service businesses, contractors, and studios:
-- Public estimate links with one-click digital acceptance.
-- Deposit invoices generated automatically upon estimate acceptance.
-- Staged progress payments and final project closeout invoices.
-- Direct payments via Card, ACH, Cash App Pay, and check tracking.
-- Automatic payment reminders and late fee assessments.
-- Multi-user account access for office staff and bookkeepers.
+- **Constant price hikes and client caps.** Big platforms raise their monthly rates every year, cap how many clients you're allowed to bill on the entry plan, or lock basic features behind $50+ tiers.
+- **Middleman payment holds and extra fees.** "Free" invoicing tools force you to use their built-in payment processor, mark up transaction fees, and occasionally freeze your payout for a week while a bot "reviews" a normal invoice.
+- **Accounting bloat when you just need to bill.** Service businesses don't want to navigate fifty double-entry bookkeeping menus just to send an estimate, track hours, and collect a deposit.
+- **Friday afternoon admin fatigue.** Reconstructing a week of billable hours and Home Depot receipts from text messages and a paper notebook every Friday is miserable.
+
+## How PayPolka fixes it
+
+PayPolka strips out the accounting bloat and handles the actual billing loop for contractors, consultants, and studios:
+
+- **Flat pricing, no caps.** $9 per person a month with every feature and unlimited clients included.
+- **Direct Stripe payments with zero cut.** You connect your own Stripe account directly. PayPolka never touches your funds and takes zero transaction fees—card, ACH, and Cash App Pay go straight from your customer to your bank.
+- **Estimates to invoices without retyping.** Send a public estimate link for one-click approval, automatically generate a deposit invoice when the client accepts, and bill progress payments or closeouts from the same job.
+- **Automatic follow-ups.** Scheduled payment reminders and optional late fees chase overdue invoices so you don't have to.
+- **Connected to Claude and ChatGPT.** Dictate or paste rough notes into the AI assistant you already use to log hours, check unbilled work, and draft invoices.
 
 ## Architectural requirements
 
@@ -27,9 +34,7 @@ When building software that handles financial transactions, speed cannot comprom
 
 1. **Direct payment routing:** Tenants connect their own Stripe account with their own API keys. I avoided Stripe Connect intentionally: there is no middleman account between a business and its revenue. PayPolka never holds customer funds and takes zero transaction fees.
 
-2. **Strict multi-tenant data isolation:** Multi-tenancy in a shared database requires zero-leak guarantees. Every database query is scoped through Rack middleware before reaching a controller. Automated specs grep the codebase in CI to prevent unscoped queries from ever entering production.
-
-3. **Minimal operational cost:** Deployed using Kamal to a single Linode box. Litestream replicates every database transaction continuously to Cloudflare R2 for off-site backup. No managed-database tier on the monthly bill, no Redis cluster, zero unnecessary hosting overhead.
+2. **Minimal operational cost:** Deployed using Kamal to a single Linode box. Litestream replicates every database transaction continuously to Cloudflare R2 for off-site backup. No managed-database tier on the monthly bill, no Redis cluster, zero unnecessary hosting overhead.
 
 ## The name
 
@@ -74,7 +79,7 @@ CI runs Brakeman (configured to fail on any warning), bundler-audit against an u
 
 ## The timeline
 
-First commit was April 15, 2026: clients, invoices, and core payments. Stripe Checkout was working in test mode two weeks later. First production deploy occurred May 6: exactly three weeks from an empty repository. By then, the application included recurring invoices, CSV client imports, and two-factor authentication.
+Pairing twenty years of software architecture with modern AI tooling means development happens in weeks, not months. PayPolka went from an empty repository to production in three weeks—complete with Stripe Checkout, recurring invoices, CSV client imports, and two-factor authentication.
 
 Since launch, I've connected PayPolka to Claude and ChatGPT over MCP. I wrote up [how the AI connection and its guardrails work](/blog/connecting-claude-and-chatgpt-to-paypolka).
 
