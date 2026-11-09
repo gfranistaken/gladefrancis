@@ -7,7 +7,7 @@ export default defineConfig({
   output: "static",
   trailingSlash: "never",
   build: { format: "file" },
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (page) => !page.endsWith("/hello") })],
   redirects: {
     "/projects/normforms": "/projects",
   },

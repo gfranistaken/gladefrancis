@@ -3,9 +3,10 @@ export interface Props {
   title: string;
   description: string;
   ogImage?: string;
+  noindex?: boolean;
 }
 
-const { title, description, ogImage = new URL('/og-image.png', Astro.site).toString() } = Astro.props;
+const { title, description, ogImage = new URL('/og-image.png', Astro.site).toString(), noindex = false } = Astro.props;
 const canonicalPath = Astro.url.pathname.replace(/\.html$/, "").replace(/^\/index$/, "/");
 const canonicalUrl = new URL(canonicalPath, Astro.site);
 
@@ -23,6 +24,7 @@ import FontTester from "../components/FontTester.astro";
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
+    {noindex && <meta name="robots" content="noindex" />}
 
     <!-- Sitemap & RSS -->
     <link rel="sitemap" href="/sitemap-index.xml" />
